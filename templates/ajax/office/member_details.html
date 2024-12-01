@@ -7,17 +7,18 @@
 <style>
     .read_only_input{
         border: none;
-        width: fit-content;
+        width: 80px;
         pointer-events: none;
         font-weight: 700;
+
     }
 </style>
 
-<d> Member Installment </d> <input type="text" class="read_only_input" name="loan_installment" id="loan_installment" value="{{group_name.member_installment_limit}}" readonly>
+<div style="display: flex; gap: 10px;">Member Installment <input type="text" class="read_only_input" name="loan_installment" id="loan_installment" value="{{group_name.member_installment_limit}}" readonly></div>
 <br>
-<d> Loan Interest </d> <input type="text" class="read_only_input" name="loan_interest" id="loan_interest{{m.id}}" readonly>
+<div style="display: flex; gap: 10px;">Loan Interest<input type="text" class="read_only_input" name="loan_interest" id="loan_interest{{m.id}}" readonly></div>
 <br>
-<d> Loan Amount </d> <input type="text" class="read_only_input" name="loan_amount" id="loan_amount{{m.id}}" readonly>
+<div style="display: flex; gap: 10px;">Loan Amount<input type="text" class="read_only_input" name="loan_amount" id="loan_amount{{m.id}}" readonly></div>
 
 {% check_member_loan m.id as n %}
 {% if n == 0 %}
