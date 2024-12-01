@@ -32,7 +32,6 @@
 <script>
     last_id = 0
     function member_details(id){
-        console.log(id)
         $.ajax({
             url: "{% url 'member_details' %}",
             method: "GET",
