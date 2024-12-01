@@ -5,8 +5,8 @@ from django.db.models import Q
 from office.models import *
 def member_details(request):
     if request.method == 'GET':
-        c = ''
         id = request.GET['id']
+        print('hi')
         m = Member.objects.filter(id=id).first()
         group_name = Group_name.objects.all().last()
         context={

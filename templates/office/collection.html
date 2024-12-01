@@ -21,9 +21,9 @@
 <div class="container">
     {% include 'include/alert.html' %}
     {% for m in members %}
-        <div class="member_box" onclick="member_details('{{m.id}}')">
-            {% check_collection_status m.id as n %}
-            <div class="text-center" onclick="member_details()" {% if n == 'yes' %} style="display: none;" {% endif %}>{{m.name}}</div>
+    {% check_collection_status m.id as n %}
+        <div {% if n == 'yes' %} style="display: none;" {% endif %} class="member_box" onclick="member_details('{{m.id}}')">
+            <div class="text-center" onclick="member_details()">{{m.name}}</div>
             <div id="members_details{{m.id}}" class="mb-3"></div>
         </div>
     {% endfor %}
@@ -32,7 +32,7 @@
 <script>
     last_id = 0
     function member_details(id){
-        $("#members_details" + last_id).html('')
+        console.log(id)
         $.ajax({
             url: "{% url 'member_details' %}",
             method: "GET",
@@ -40,12 +40,16 @@
                 id:id,
             },
             success: function(res){
+                $("#members_details" + last_id).html('')
                 $("#members_details" + id).html(res.t)
-                    last_id = id
-                }
-            })
+                last_id = 0
+                last_id = id
             }
+        })
+    }
+    console.log(last_id)
         
+
     
 </script>
 {% endblock content %}
