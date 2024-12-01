@@ -1,0 +1,17 @@
+<style>
+    .but{
+            display: flex;
+            gap: 10px;
+            overflow: scroll;
+            width: 100%;
+        }
+</style>
+
+<div class="but">
+    <a  href="/office/office_home/" class="my-1 {% if request.path == '/office/office_home/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Home</a>
+    <a  href="/office/collection/" class="my-1 {% if request.path == '/office/collection/' %}btn btn-warning{% else %}btn btn-primary{% endif %}" >Collection</a>
+    <a  href="/office/loan/" class="my-1 {% if request.path == '/office/loan/' %}btn btn-warning{% else %}btn btn-primary{% endif %}" >Loan</a>
+    <a  href="/office/members/" class="my-1 {% if request.path == '/office/members/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Members</a>
+    <a  href="/office/profile/" class="my-1 {% if request.path == '/office/profile/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Profile</a>
+    <a href="/logout/" class="btn btn-danger my-1">Logout</a>
+</div>

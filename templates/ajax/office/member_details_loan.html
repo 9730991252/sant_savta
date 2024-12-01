@@ -1,0 +1,55 @@
+{% load office_tag %}
+<center>
+    <b><h5>{{m.name}}</h5></b>
+</center>
+
+<form method="POST">{% csrf_token %}
+
+<input type="hidden" value="{{m.id}}" name="member_id">
+<br>
+<div class="alert alert-danger" id="amount_alert text-center">कृपया {{group_name.maximum_loan}} पेक्षा  कमी रक्कम टाका. <br> गटाकडे उपलब्ध असलेली रक्कम {% available_amount %}</div>
+<div class="mb-3">
+    <label for="">Enter loan Amount</label>
+    <input type="number" class="form-control" required placeholder="Enter loan Amount" name="loan_amount" id="amount{{m.id}}" oninput="check_amount('{{m.id}}')">
+</div>
+<div class="mb-3">
+    <label for="">Serect Pin</label>
+    <input type="password" class="form-control mt-2" required placeholder="Enter Your Serect Pin" id="pin{{m.id}}" oninput="check_pin('{{m.id}}')">
+</div>
+<br>
+<button  class="btn btn-danger" id="add_loan_btn{{m.id}}" name="add_loan_member" style="display: none;">Add Loan</button>
+
+</form> 
+<script>
+    maximum_loan = '{{group_name.maximum_loan}}'
+    function check_amount(m_id){
+        amount = document.getElementById('amount'+m_id).value;
+        if (Number(amount) > 0){}
+        if (Number(amount) < 0){
+            amount = document.getElementById('amount'+m_id).value = 0;
+        }
+        if (Number(amount) <= Number(maximum_loan)){
+        }
+        if (Number(amount) > Number(maximum_loan)){
+            alert('कृपया {{group_name.maximum_loan}} पेक्षा  कमी रक्कम टाका.')
+            amount = document.getElementById('amount'+m_id).value = 0
+        }
+        if (Number(amount) <= Number('{% available_amount %}')){
+        }
+        if (Number(amount) >= Number('{% available_amount %}')){
+            alert('कृपया {% available_amount %} पेक्षा  कमी रक्कम टाका.')
+            amount = document.getElementById('amount'+m_id).value = 0
+        }
+
+    }
+    function check_pin(m_id){
+        pin = document.getElementById('pin'+m_id).value;
+        if (Number(pin) == Number('{{office_empoyee.pin}}')){
+            document.getElementById('add_loan_btn'+m_id).style.display = 'unset'
+        }
+        if (Number(pin) != Number('{{office_empoyee.pin}}')){
+            document.getElementById('add_loan_btn'+m_id).style.display = 'none'
+        }
+    }
+
+</script>

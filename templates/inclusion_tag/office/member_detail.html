@@ -1,0 +1,8 @@
+{% load office_tag %}
+<div class="member_box">
+    <div><b>{{m.name}}</b></div>
+    <div>{{m.mobile}}</div>
+    <div>सभासद हप्ता जमा <b><strong style="color: green;">{{member_installment_amount}}</strong></b></div>
+    <div>कर्ज येणे बाकी <b><strong style="color: red;">{% check_member_loan m.id %}</strong></b></div>
+    <div>व्याज येणे बाकी <b><strong style="color: red;">{{loan_interest}}</strong></b></div>
+</div>

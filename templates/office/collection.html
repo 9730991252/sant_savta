@@ -1,0 +1,47 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load static %}
+{% load office_tag %}
+<div>welcome - {{office_empoyee.name}}</div>
+
+
+{% include 'include/office/office_menu.html' %}
+
+<div class="container">
+    {% include 'include/alert.html' %}
+    <select onclick="member_details()" class="form-select" id="members" @change="member_details()" aria-label="Default select example">
+        <option>Select Member</option>
+        {% for m in members %}
+            {% check_collection_status m.id as n %}
+            <option value="{{m.id}}" {% if n == 'yes' %} style="display: none;" {% endif %}>{{m.name}}</option>
+        {% endfor %}
+    </select>
+<br>
+    <div id="members_details" class="mb-3"></div>
+</div>
+
+<script>
+    last_id = 0
+    function member_details(){
+        id = document.getElementById('members').value
+        if (id != 'Select Member'){
+            if (last_id != id){
+                console.log(id)
+                last_id = id
+                $.ajax({
+                        url: "{% url 'member_details' %}",
+                        method: "GET",
+                        data:{
+                            id:id,
+                            },
+                            success: function(res){
+                                $("#members_details").html(res.t)
+                            }
+                    })
+            }
+        }
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load static %}
+<div>welcome - {{office_empoyee.name}}</div>
+{% include 'include/office/office_menu.html' %}
+<style>
+    .main_box{
+        width: 400px;
+        border: 3px solid  rgb(240, 240, 240);
+        margin: 0 auto;
+        padding: 10px;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 50px;
+        div{
+            width: 100%;
+        }
+    }
+</style>
+<form method="POST">⁡⁢⁣⁢{% csrf_token %}⁡
+<div class="main_box">
+    <div class="text-center">
+        <h5>
+            ⁡⁢⁢⁢𝗚𝗿𝗼𝘂𝗽 𝗗𝗲𝘁𝗮𝗶𝗹𝘀⁡
+        </h5>
+    </div>
+    <input type="hidden" name="id" value="{{group.id}}">
+    <div>
+        <lable>Group Name</lable>
+        <input type="text" name="name" value="{{group.name}}" class="form-control" required>
+    </div>
+    <div>
+        <lable>Address</lable>
+        <input type="text" name="address" value="{{group.address}}" class="form-control" required>
+    </div>
+    <div>
+        <lable>Loan Interest</lable>
+        <input type="number" name="loan_interest" step="any"  value="{{group.loan_interest}}" class="form-control" required>
+    </div>
+    <div>
+        <lable>सभासद हप्ता</lable>
+        <input type="number" name="member_installment_limit"  value="{{group.member_installment_limit}}" class="form-control" required>
+    </div>
+    <div>
+        <lable>जास्तीत जास्त लोन</lable>
+        <input type="number" name="maximum_loan"  value="{{group.maximum_loan}}" class="form-control" required>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary"  style="width: 100%;">Save Changes</button>
+    </div>
+</div>
+</form>
+{% endblock content %}

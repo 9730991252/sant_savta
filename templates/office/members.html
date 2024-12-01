@@ -1,0 +1,131 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load static %}
+<style>
+  .all_members_box{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid black;
+    margin: 10px auto;
+    padding: 10px;
+    width: 80%;
+    .flex{
+      display: flex;
+      gap: 10px;
+    }
+  }
+</style>
+<div>welcome - {{office_empoyee.name}}</div>
+{% include 'include/office/office_menu.html' %}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Add Member
+</button>
+{% include 'include/alert.html' %}
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Member Details </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post">{% csrf_token %}
+                <div class="mb-3">
+                    <lable>Name</lable>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <lable>Address</lable>
+                    <input type="text" name="address" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <lable>Mobile</lable>
+                    <input type="number" name="mobile" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <lable>Pin</lable>
+                    <input type="number" name="pin" value="1234" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary" name="add_member">Add</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  
+<div class="container">
+  {% for m in members %} 
+    <div class="all_members_box">
+          <div style="padding: 2px;position: absolute;left: 0;top: 0;border-right: 1px solid black;border-bottom: 1px solid black;">{{forloop.counter}}</div>
+          <div><b>{{m.name}}</b></div>
+          <div>{{m.address}}</div>
+          <div class="flex">
+            <div>Mobile - {{m.mobile}}</div>
+            <div>Pin - {{m.pin}}</div>
+          </div>
+          <div class="flex">
+            <div><form class="" method="POST">{% csrf_token %}
+              <input type="hidden" name="id" value="{{m.id}}">
+              {% if m.status == 1 %}
+                <button class="btn btn-success" type="submit" name="active">Active</button>
+              {% else %}
+                <button class="btn btn-danger" type="submit" name="deactive">Deactive</button>
+              {% endif %}
+            </form></div>
+            <div><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit{{m.id}}">Edit</button></div>
+          </div>
+      </div>
+      <div class="modal fade" id="edit{{m.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit To - {{m.name}}</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">{% csrf_token %}
+                  <input type="hidden" name="id" value="{{m.id}}">
+                    <div class="mb-3">
+                        <lable>Name</lable>
+                        <input type="text" name="name" value="{{m.name}}" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <lable>Address</lable>
+                        <input type="text" name="address" value="{{m.address}}" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <lable>Mobile</lable>
+                        <input type="number" name="mobile" value="{{m.mobile}}" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <lable>Pin</lable>
+                        <input type="number" name="pin" value="{{m.pin}}" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary" name="edit_member">Add</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+{% endblock content %}

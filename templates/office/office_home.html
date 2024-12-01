@@ -1,0 +1,9 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load office_tag %}
+<div>welcome - {{office_empoyee.name}}</div>
+{% include 'include/office/office_menu.html' %}
+{% group_information %}
+{% endblock content %}

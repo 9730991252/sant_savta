@@ -1,0 +1,15 @@
+<style>
+    .but{
+            display: flex;
+            gap: 10px;
+            overflow: scroll;
+            width: 100%;
+        }
+</style>
+
+<div class="but">
+    <a  href="/owner/owner_home/" class="my-1 {% if request.path == '/owner/owner_home/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Home</a>
+    <a  href="/owner/add_bill/" class="my-1 {% if request.path == '/owner/add_bill/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Add Bill</a>
+    <a  href="/owner/profile/" class="my-1 {% if request.path == '/owner/profile/' %}btn btn-warning{% else %}btn btn-primary{% endif %}">Profile</a>
+    <a href="/logout/" class="btn btn-danger my-1">Logout</a>
+</div>

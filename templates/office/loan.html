@@ -1,0 +1,85 @@
+{% extends 'home/base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+{% load static %}
+{% load office_tag %}
+<div>welcome - {{office_empoyee.name}}</div>
+
+
+{% include 'include/office/office_menu.html' %}
+
+<style>
+    .container{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 200px);
+        gap: 10px;
+        justify-content: start;
+    }
+    .eligible_member{
+        padding: 10px;
+        width: 200px;
+        border: 1px solid green;
+        text-align: center;
+        border-radius: 10px;
+    }
+</style>
+
+<div class="container">
+    {% for m in members %}
+        {% check_member_loan m.id as n %}
+        {% if n == 0 %}
+            <div class="eligible_member">
+                <div>{{m.name}}</div>
+                <div><button type="button" onclick="member_details('{{m.id}}')" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{m.id}}">Add Loan</button></div>
+            </div>
+        {% else %}
+            <div class="eligible_member" style="border-color: red;">
+                <div>{{m.name}}</div>
+                <div>{{n}}</div>
+            </div>
+        {% endif %}
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal{{m.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Loan Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div id="modal-body" class="modal-body">{{m.id}}
+            <div id="members_details{{m.id}}"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+<br>
+</div>
+
+<script>
+    last_id = 0
+    function member_details(member_id){
+        if (member_id != 'Select Member'){
+            if (last_id != member_id){
+                console.log(member_id)
+                last_id = member_id
+                $.ajax({
+                        url: "{% url 'member_details_loan' %}",
+                        method: "GET",
+                        data:{
+                            id:member_id,
+                            },
+                            success: function(res){
+                                $("#members_details" + member_id).html(res.t)
+                            }
+                    })
+            }
+        }
+    }
+</script>
+{% endblock content %}

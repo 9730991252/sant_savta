@@ -1,0 +1,88 @@
+{% load office_tag %}
+<style>
+.main_box{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    font-weight: 700;
+    border: 1px solid black;
+    .group_name{
+        grid-column-start: 1;
+        grid-column-end: 3;
+        padding: 10px;
+        border: none;
+        border-bottom: 1px solid black;
+        font-size: 18px;
+        color: rgb(192, 102, 0);
+        background-color:antiquewhite;
+    }
+    div{
+        border: 1px solid black;
+        text-align: center;
+        padding: 2px;
+    }
+    .div1{
+        border-top: none;
+        border-left: none;
+    }
+    .div2{
+        border: none;
+        border-bottom: 1px solid black;
+    }
+    .end1{
+        border-top: none;
+        border-left: none;
+        border-bottom: none;
+        background-color: rgb(234, 255, 203);
+    }
+    .end2{
+        border: none;
+        color: green;
+        background-color: rgb(234, 255, 203);
+    }
+}
+</style>
+<div class="container">
+    <div class="main_box">
+        <div class="group_name">{{group.name}}</div>
+
+        <div class="div1">सुरुवात दिनांक</div>
+        <div class="div2">{{group.date}}</div>
+
+        <div class="div1">एकूण सभासद</div>
+        <div class="div2">{{total_members}}</div>
+
+        <div class="div1">एकूण सभासद हप्ता जमा</div>
+        <div class="div2">{{total_member_installment}}</div>
+
+        <div class="div1">एकूण व्याज जमा</div>
+        <div class="div2" style="color: green;">{{total_interest}}</div>
+
+        <div class="div1">एकूण कर्ज येणे बाकी </div>
+        <div class="div2" style="color: red;">{{total_pending_loan}}</div>
+
+        <div class="div1 end1">एकूण शिल्लक रक्कम</div>
+        <div class="div2 end2">{% available_amount %}</div>
+    </div>
+
+    <!--------------------------------------------------------------------------------->
+<br>
+    <style>
+        .member_box{
+            width: 90%;
+            margin: 0 auto;
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+        .flex{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
+    {% for m in member %}
+        {% member_detail m.id %}
+    {% endfor %}
+</div>
