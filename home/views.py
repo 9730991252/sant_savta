@@ -4,7 +4,6 @@ from office.models import *
 from datetime import date
 # Create your views here.
 def index(request):
-    Group_name.objects.all().delete()
     return render(request, 'home/index.html')
 
 def login(request):

@@ -34,6 +34,7 @@ source venv/bin/activate
 
 ************************************
 
+
 ****************migrations******
 python3 manage.py makemigrations
 
@@ -56,11 +57,11 @@ deactivate
 
 ************ Create System Socket File for Gunicorn *******
 
-Example:- sudo nano /etc/systemd/system/crenta.in.gunicorn.socket
+Example:-  nano /etc/systemd/system/crenta.in.gunicorn.socket
 
 cd  /etc/systemd/system/
 
-sudo nano sant_savta.com.gunicorn.socket
+ nano sant_savta.com.gunicorn.socket
 
 
 
@@ -75,12 +76,12 @@ WantedBy=sockets.target
 
 
 ************** Create System Service File for Gunicorn ******
-Syntax:- sudo nano /etc/systemd/system/your_domain.gunicorn.service
-Example:- sudo nano /etc/systemd/system/narayaniorder.com.gunicorn.service
+Syntax:-  nano /etc/systemd/system/your_domain.gunicorn.service
+Example:-  nano /etc/systemd/system/narayaniorder.com.gunicorn.service
 
 cd  /etc/systemd/system/
 
-sudo nano sant_savta.com.gunicorn.service
+ nano sant_savta.com.gunicorn.service
 
 
 [Unit]
@@ -102,28 +103,28 @@ ExecStart=/root/sant_savta/venv/bin/gunicorn \
 WantedBy=multi-user.target
 
 ----------------------------------------------------------------
-sudo systemctl start sant_savta.com.gunicorn.socket
+ systemctl start sant_savta.com.gunicorn.socket
 
-sudo systemctl start sant_savta.com.gunicorn.service
+ systemctl start sant_savta.com.gunicorn.service
 
 
 -----------------------------------------------------------------
 
-sudo systemctl enable sant_savta.com.gunicorn.socket
+ systemctl enable sant_savta.com.gunicorn.socket
 
-sudo systemctl enable sant_savta.com.gunicorn.service
+ systemctl enable sant_savta.com.gunicorn.service
 
 
 -----------------------------------------------------------------------
 
-sudo systemctl status sant_savta.com.gunicorn.socket
+ systemctl status sant_savta.com.gunicorn.socket
 
-sudo systemctl status sant_savta.com.gunicorn.service
+ systemctl status sant_savta.com.gunicorn.service
 
 -------------------------------------------
 
-sudo systemctl daemon-reload
-sudo systemctl restart sant_savta.com.gunicorn
+ systemctl daemon-reload
+ systemctl restart sant_savta.com.gunicorn
 
 
 
@@ -132,13 +133,13 @@ sudo systemctl restart sant_savta.com.gunicorn
 
 
 ****************** Create Virtual Host File ******
-Syntax:- sudo nano /etc/nginx/sites-available/your_domain
-Example:- sudo nano /etc/nginx/sites-available/crenta.in
+Syntax:-  nano /etc/nginx/sites-available/your_domain
+Example:-  nano /etc/nginx/sites-available/crenta.in
 
 
 cd /etc/nginx/sites-available
 
-sudo nano sant_savta.com
+ nano sant_savta.com
 
 
 
@@ -165,26 +166,26 @@ server{
 
 ########## Enable Virtual Host or Create Symbolic Link of Virtual Host File ########
 
-sudo ln -s /etc/nginx/sites-available/sant_savta.com /etc/nginx/sites-enabled/sant_savta.com
+ ln -s /etc/nginx/sites-available/sant_savta.com /etc/nginx/sites-enabled/sant_savta.com
 
 
 %%%%%%%%%%%%%%%%%%%%% Check Configuration is Correct or Not %%%%%
 
-sudo nginx -t
+ nginx -t
 
 %%%%%%%%%%%% Restart Nginx %%%%%%%%%
 
-sudo service nginx restart
+ service nginx restart
 
 
 ********** restart ******
 
-sudo systemctl daemon-reload
-sudo systemctl restart sant_savta.com.gunicorn
+ systemctl daemon-reload
+ systemctl restart sant_savta.com.gunicorn
 
 
 --------------------------------------- ssl ------------------
 
-sudo certbot --nginx
+ certbot --nginx
 
-sudo certbot --nginx -d janmanasnews.com -d www.janmanasnews.com
+ certbot --nginx -d janmanasnews.com -d www.janmanasnews.com
