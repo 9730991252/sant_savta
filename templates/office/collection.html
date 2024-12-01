@@ -15,7 +15,7 @@
         <option>Select Member</option>
         {% for m in members %}
             {% check_collection_status m.id as n %}
-            <option value="{{m.id}}" {% if n == 'yes' %} style="display: none;" {% endif %}>{{m.name}}</option>
+            <option value="{{m.id}}" onclick="member_details()" {% if n == 'yes' %} style="display: none;" {% endif %}>{{m.name}}</option>
         {% endfor %}
     </select>
 <br>
