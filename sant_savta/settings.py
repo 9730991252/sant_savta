@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'home',
     'office',
     'sunil',
-    'ajax'
+    'ajax',
+    'member',
 ]
 
 MIDDLEWARE = [

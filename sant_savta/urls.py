@@ -7,4 +7,5 @@ urlpatterns = [
     path('sunil/', include('sunil.urls')),
     path('office/', include('office.urls')),
     path('ajax/', include('ajax.urls')),
+    path('member/', include('member.urls')),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

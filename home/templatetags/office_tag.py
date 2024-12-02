@@ -128,7 +128,7 @@ def member_detail(member_id):
     if loan == None:
         loan_interest = 0
     else:
-        loan_interest = (int(loan) / 100) * int(group.loan_interest)
+        loan_interest = (int(loan) / 100) * group.loan_interest
         days = loan_interest_days(member_id)
         loan_interest = (loan_interest * days)
     return{

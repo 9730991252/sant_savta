@@ -6,4 +6,7 @@
 <div>welcome - {{office_empoyee.name}}</div>
 {% include 'include/office/office_menu.html' %}
 {% group_information %}
+{% for m in member %}
+{% member_detail m.id %}
+{% endfor %}
 {% endblock content %}

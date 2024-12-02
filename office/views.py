@@ -17,7 +17,7 @@ def office_home(request):
             return redirect('login')
         context={
             'office_empoyee':office_empoyee,
-
+            'member':Member.objects.all()
         }
         return render(request, 'office/office_home.html', context)
     else:
