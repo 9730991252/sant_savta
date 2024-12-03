@@ -1,0 +1,99 @@
+<br>
+<style>
+    .demand_main_box{
+        border: 1px solid black;
+        text-align: center;
+    }
+    .loan_demand_box{
+    display: grid;
+    grid-template-columns: 0.1fr 2fr 1fr 1fr;
+    font-weight: 700;
+    border: 1px solid black;
+    background-color: white;
+    h5{
+        color: red;
+    }
+    .head_line{
+        padding: 5px;
+        border-bottom: 1px solid black;
+        font-size: 18px;
+        color: rgb(0, 0, 0);
+        background-color:antiquewhite;
+    }
+    div{
+        border: 1px solid black;
+        text-align: center;
+        padding: 2px;
+    }
+    .div1{
+        border-top: none;
+        border-left: none;
+    }
+    .div2{
+        border-top: none;
+    }
+    .div3{
+        border: none;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+    }
+    .div4{
+        border-top: none;
+        border-bottom: none;
+        border-right: none;
+        border-bottom: 1px solid black;
+    }
+    .end1{
+        border-top: none;
+        border-left: none;
+        border-bottom: none;
+        background-color: rgb(234, 255, 203);
+    }
+    .end2{
+        border-top: none;
+        border-bottom: none;
+        background-color: rgb(234, 255, 203);
+    }
+    .end3{
+        border: none;
+        color: green;
+        background-color: rgb(234, 255, 203);
+    }
+    .end4{
+        border-top: none;
+        border-bottom: none;
+        border-right: none;
+        color: green;
+        background-color: rgb(234, 255, 203);
+    }
+
+    }
+    .flex{
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    </style>
+
+
+{% if loan_demand %}
+<div class="demand_main_box">
+<div><h5 style="color: red;"><b>कर्ज मागणी सभासद यादी </b></h5></div>
+<div class="loan_demand_box">
+<div class="div1 head_line"><b>#</b></div>
+<div class="div2 head_line"><b>Name</b></div>
+<div class="div3 head_line"><b>Date</b></div>
+<div class="div4 head_line"><b>मागणी रक्कम</b></div>
+{% for l in loan_demand %}
+<div class="div1">{{forloop.counter}}</div>
+<div class="div2">{{l.member.name}}</div>
+<div class="div3">{{l.date}}</div>
+<div class="div4">{{l.demand_amount}}</div>
+{% endfor %}
+<div class="div1 end1"></div>
+<div class="div2 end2">Total</div>
+<div class="div3 end3">{{installment_amount_total}}</div>
+<div class="div4 end4">{{interest_amount_total}}</div>
+</div>
+</div>
+{% endif %}

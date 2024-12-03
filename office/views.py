@@ -40,6 +40,9 @@ def loan(request):
                         office_employee_id=office_empoyee.id,
                         loan_amount = loan_amount,
                     ).save()
+                    loan_demand = Loan_demand.objects.filter(member_id=member_id).first()
+                    if loan_demand:
+                        loan_demand.delete()
                 time.sleep(1)        
                 return redirect('loan')
         else:
@@ -86,13 +89,8 @@ def collection(request):
                             loan_id=l.id,
                             member_id=member_id,
                             office_employee_id=office_empoyee.id,
-                            installment_amount=loan_amount,
-                        ).save()
-                        Member_loan_interest(
-                            loan_id=l.id,
-                            member_id=member_id,
-                            office_employee_id=office_empoyee.id,
                             interest_amount=loan_interest,
+                            installment_amount=loan_amount,
                         ).save()
                         g = Member_loan_installment.objects.filter(member_id=member_id, loan_id=l.id).aggregate(Sum('installment_amount'))
                         installment_amount = g['installment_amount__sum']

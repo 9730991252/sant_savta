@@ -23,7 +23,7 @@ def available_amount():
         if loan_installment:
             total_available_amount += loan_installment
         ############
-        loan_interest = Member_loan_interest.objects.all().aggregate(Sum('interest_amount'))
+        loan_interest = Member_loan_installment.objects.all().aggregate(Sum('interest_amount'))
         loan_interest = loan_interest['interest_amount__sum']
         if loan_interest:
             loan_interest += loan_interest
@@ -61,7 +61,7 @@ def loan_interest_days(member_id):
     today_date = date.today()
     member_loan = Member_loan.objects.filter(member_id=member_id, loan_status = 1).first()
     if member_loan:
-        member_loan_interest = Member_loan_interest.objects.filter(loan_id=member_loan.id).last()
+        member_loan_interest = Member_loan_installment.objects.filter(loan_id=member_loan.id).last()
         if member_loan_interest:
             day = (today_date - member_loan_interest.date)
         else:
@@ -87,7 +87,7 @@ def group_information():
     if total_member_installment is None:
         total_member_installment = 0 
         
-    total_interest = Member_loan_interest.objects.filter().aggregate(Sum('interest_amount'))
+    total_interest = Member_loan_installment.objects.filter().aggregate(Sum('interest_amount'))
     total_interest = total_interest['interest_amount__sum']
     if total_interest is None:
         total_interest = 0 
@@ -135,4 +135,27 @@ def member_detail(member_id):
         'm':Member.objects.filter(id=member_id).first(),
         'member_installment_amount':member_installment_amount,
         'loan_interest':loan_interest
+    }
+    
+@register.inclusion_tag('inclusion_tag/office/loan_installments_details.html')
+def loan_installments_details(loan_id):
+    loan_installment = Member_loan_installment.objects.filter(loan_id=loan_id)
+    installment_amount_total = ''
+    interest_amount_total = ''
+    if loan_installment:
+        installment_amount_total = loan_installment.aggregate(Sum('installment_amount'))
+        installment_amount_total = installment_amount_total['installment_amount__sum']
+        interest_amount_total = loan_installment.aggregate(Sum('interest_amount'))
+        interest_amount_total = interest_amount_total['interest_amount__sum']
+    
+    return{
+        'loan_installments':Member_loan_installment.objects.filter(loan_id=loan_id),
+        'installment_amount_total':installment_amount_total,
+        'interest_amount_total':interest_amount_total,
+    }
+    
+@register.inclusion_tag('inclusion_tag/office/loan_demand_list.html')
+def loan_demand_list():
+    return{
+        'loan_demand':Loan_demand.objects.all().order_by('date')
     }

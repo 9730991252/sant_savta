@@ -3,8 +3,10 @@
 {% endblock head %}
 {% block content %}
 {% load office_tag %}
-<div>welcome - {{member.name}}</div>
 {% include 'include/member/member_menu.html' %}
+<br><br><br>
+<div>welcome - {{member.name}}</div>
+
 {% group_information %}
 
 <style>
@@ -57,6 +59,18 @@
     }
 
     }
+    .flex{
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    .member_loan{
+        margin-bottom: 10px;
+        text-align: center;
+        width: 100%;
+        height: fit-content;
+        border: 1px solid black;
+    }
 </style>
 <div class="container">
 
@@ -75,8 +89,59 @@
 
 <br>
 
-{% for m in members %}
-{% member_detail m.id %}
-{% endfor %}
+<div class="text-center">
+    <h5><b>{{member.name}} कर्जाचा  तपशील</b></h5>
 </div>
+
+
+{% for m in member_loan %}
+<br>
+<div class="member_loan">
+    <div class="flex p-2" style="justify-content: space-evenly; font-weight: 700;">
+        <div>कर्ज रक्कम  <b>{{m.loan_amount}}</b></div>
+        <div>{{m.date}}</div>
+        {% if m.loan_status == 0 %}
+            <div style="color: green;">पूर्ण</div>
+        {% else %}
+            <div style="color: red;">चालू</div>
+        {% endif %}
+    </div>
+    {% loan_installments_details m.id %}
+</div>
+
+
+{% endfor %}
+
+
+{% loan_demand_list %}
+
+</div>
+<!------------------------------------------------------------------------------------->
+<style>
+    .footer{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgb(197, 197, 197);
+        padding: 5px;
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        gap: 10px;
+        input{width: 100%;}
+    }
+</style>
+{% if loan_ststus == 0 %}
+<form method="POST">{% csrf_token %}
+<div class="footer">
+    <div>
+        <input type="number" class="form-control" name="demand_amount" placeholder="कर्ज मागणी रक्कम टाका">
+    </div>
+    <div>
+        <button type="submit" class="btn btn-danger" name="add_demand">मागणी करा</button>
+    </div>
+</div>
+</form>
+<br><br>
+{% endif %}
 {% endblock content %}

@@ -10,7 +10,7 @@
 {% include 'include/office/office_menu.html' %}
 
 <style>
-    .container{
+    .main_box{
         display: grid;
         grid-template-columns: repeat(auto-fit, 200px);
         gap: 10px;
@@ -26,6 +26,9 @@
 </style>
 
 <div class="container">
+    {% loan_demand_list %}
+    <br>
+    <div class="main_box">
     {% for m in members %}
         {% check_member_loan m.id as n %}
         {% if n == 0 %}
@@ -59,6 +62,7 @@
   </div>
     {% endfor %}
 <br>
+</div>
 </div>
 
 <script>

@@ -43,13 +43,12 @@ class Member_loan_installment(models.Model):
     loan = models.ForeignKey(Member_loan,on_delete=models.PROTECT,null=True)
     office_employee = models.ForeignKey(Office_employee,on_delete=models.PROTECT,null=True)
     installment_amount = models.FloatField()
+    interest_amount = models.FloatField(null=True)
     date = models.DateField(auto_now_add=True)
     added_date = models.DateTimeField(auto_now_add=True)
     
-class Member_loan_interest(models.Model):
+class Loan_demand(models.Model):
     member = models.ForeignKey(Member,on_delete=models.PROTECT,null=True)
-    loan = models.ForeignKey(Member_loan,on_delete=models.PROTECT,null=True)
-    office_employee = models.ForeignKey(Office_employee,on_delete=models.PROTECT,null=True)
-    interest_amount = models.FloatField()
-    date = models.DateField(auto_now_add=True)
-    added_date = models.DateTimeField(auto_now_add=True)
+    demand_amount = models.FloatField(null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    

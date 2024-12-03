@@ -6,6 +6,10 @@
 <div>welcome - {{office_empoyee.name}}</div>
 {% include 'include/office/office_menu.html' %}
 {% group_information %}
+<div class="container">
+{% loan_demand_list %}
+</div>
+<br>
 {% for m in member %}
 {% member_detail m.id %}
 {% endfor %}
