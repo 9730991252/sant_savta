@@ -1,4 +1,5 @@
 {% load office_tag %}
+<div class="alert alert-danger" id="amount_alert text-center">कृपया {{group_name.maximum_loan}} पेक्षा  कमी रक्कम टाका. <br> गटाकडे उपलब्ध असलेली रक्कम {% available_amount %}</div>
 <center>
     <b><h5>{{m.name}}</h5></b>
 </center>
@@ -7,10 +8,13 @@
 
 <input type="hidden" value="{{m.id}}" name="member_id">
 <br>
-<div class="alert alert-danger" id="amount_alert text-center">कृपया {{group_name.maximum_loan}} पेक्षा  कमी रक्कम टाका. <br> गटाकडे उपलब्ध असलेली रक्कम {% available_amount %}</div>
 <div class="mb-3">
-    <label for="">Enter loan Amount</label>
-    <input type="number" class="form-control" required placeholder="Enter loan Amount" name="loan_amount" id="amount{{m.id}}" oninput="check_amount('{{m.id}}')">
+    <label for="">कर्जाची रक्कम टाका </label>
+    <input type="number" class="form-control" required placeholder="कर्जाची रक्कम टाका" name="loan_amount" id="amount{{m.id}}" oninput="check_amount('{{m.id}}')">
+</div>
+<div class="mb-3">
+    <label for="">कमीत कमी कर्जाचा हप्ता</label>
+    <input type="number" class="form-control" required placeholder="कमीत कमी कर्जाचा हप्ता" name="minimum_loan_installment" id="minimum_loan_installment{{m.id}}" oninput="check_zero('minimum_loan_installment{{m.id}}')">
 </div>
 <div class="mb-3">
     <label for="">Serect Pin</label>
@@ -21,6 +25,12 @@
 
 </form> 
 <script>
+    function check_zero(input_id){
+        value = document.getElementById(input_id).value;
+        if (value  < 0){
+            value =document.getElementById(input_id).value = 0
+        }
+    }
     maximum_loan = '{{group_name.maximum_loan}}'
     function check_amount(m_id){
         amount = document.getElementById('amount'+m_id).value;

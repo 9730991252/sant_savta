@@ -32,6 +32,7 @@ def loan(request):
             if 'add_loan_member'in request.POST:
                 member_id = request.POST.get('member_id')
                 loan_amount = request.POST.get('loan_amount')
+                minimum_loan_installment = request.POST.get('minimum_loan_installment')
                 if Member_loan.objects.filter(member_id=member_id,loan_status=1).exists():
                     pass
                 else:
@@ -39,6 +40,7 @@ def loan(request):
                         member_id = member_id,
                         office_employee_id=office_empoyee.id,
                         loan_amount = loan_amount,
+                        minimum_loan_installment = minimum_loan_installment,
                     ).save()
                     loan_demand = Loan_demand.objects.filter(member_id=member_id).first()
                     if loan_demand:

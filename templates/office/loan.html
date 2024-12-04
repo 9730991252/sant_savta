@@ -31,15 +31,15 @@
     <div class="main_box">
     {% for m in members %}
         {% check_member_loan m.id as n %}
-        {% if n == 0 %}
-            <div class="eligible_member">
+        {% if n.amount == 0 %}
+        <div class="eligible_member">
                 <div>{{m.name}}</div>
                 <div><button type="button" onclick="member_details('{{m.id}}')" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{m.id}}">Add Loan</button></div>
             </div>
         {% else %}
             <div class="eligible_member" style="border-color: red;">
                 <div>{{m.name}}</div>
-                <div>{{n}}</div>
+                <div>{{n.amount}}</div>
             </div>
         {% endif %}
   
@@ -48,10 +48,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Loan Details</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">नवीन कर्ज तपशील भरा</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div id="modal-body" class="modal-body">{{m.id}}
+        <div id="modal-body" class="modal-body">
             <div id="members_details{{m.id}}"></div>
         </div>
         <div class="modal-footer">

@@ -1,6 +1,6 @@
-<strong>{{m.name}}</strong>
+<div class="text-center"><strong><h5>{{m.name}}</h5></strong></div> 
 {% load office_tag %}
-
+{% check_member_loan m.id as check_member_loan %}
 <form method="POST">
 <input type="hidden" value="{{m.id}}" name="member_id">
 
@@ -13,29 +13,21 @@
 
     }
 </style>
-
-<div style="display: flex; gap: 10px;">Member Installment <input type="text" class="read_only_input" name="loan_installment" id="loan_installment" value="{{group_name.member_installment_limit}}" readonly></div>
+<div style="display: flex; gap: 10px;">सभासद हप्ता<input type="text" class="read_only_input" name="loan_installment" id="loan_installment" value="{{group_name.member_installment_limit}}" readonly></div>
 <br>
-<div style="display: flex; gap: 10px;">Loan Interest<input type="text" class="read_only_input" name="loan_interest" id="loan_interest{{m.id}}" readonly></div>
+<div style="display: flex; gap: 10px;">कर्जाचे व्याज<input type="text" class="read_only_input" name="loan_interest" id="loan_interest{{m.id}}" readonly></div>
 <br>
-<div style="display: flex; gap: 10px;">Loan Amount<input type="text" class="read_only_input" name="loan_amount" id="loan_amount{{m.id}}" readonly></div>
+<div style="display: flex; gap: 10px;">कर्जाची मुद्दल <input type="number"  name="loan_amount" oninput="check_amount()" value="{{check_member_loan.minimum_loan_installment}}" id="loan_amount{{m.id}}" required></div>
 
-{% check_member_loan m.id as n %}
-{% if n == 0 %}
-<div class="m-3">
+{% if check_member_loan.amount == 0 %}
+<div class="m-3" style="display: flex; gap: 10px;">
+    <label for="">एकूण रक्कम </label>
     <input type="number" class="form-control" value="3000" name="amount" readonly>
 </div>
 <button type="submit" class="btn btn-primary" name="add_amount" >Add</button>
 {% else %}
-<div class="m-3">
-    <label> Enter Amount</label>
-    <div class="form-floating ">
-        <input type="number" class="form-control" required placeholder="Enter Amount" name="amount" id="amount" oninput="check_amount()">
-        <label for="amount" id="enter_amount_label"> Enter Amount</label>
-        <label id="alert_label" for="amount" style="display: none;" >123</label>
-    </div>
-</div>
-<button type="submit" class="btn btn-primary" name="add_amount" id="add_amount_btn" style="display: none;">Add</button>
+<div style="margin: 10px; display: flex; gap: 10px; font-weight: 700;">एकूण रक्कम<input type="number" class="read_only_input"  name="amount" id="amount" readonly></div>
+<button type="submit" class="btn btn-primary" name="add_amount" id="add_amount_btn">Add</button>
 {% endif %}
 
 
@@ -44,54 +36,32 @@
 
 {% loan_interest_days m.id as n %}
 <br><br>
-<div class="alert alert-danger">𝗥𝗲𝗺𝗮𝗶𝗻𝗶𝗻𝗴 𝗹𝗼𝗮𝗻 <strong id="loan{{m.id}}">{% check_member_loan m.id as check_member_loan %}{{check_member_loan}}</strong></div>
+<div class="alert alert-danger">𝗥𝗲𝗺𝗮𝗶𝗻𝗶𝗻𝗴 𝗹𝗼𝗮𝗻 <strong id="loan{{m.id}}">{{check_member_loan.amount}}</strong></div>
 <script>
     member_installment_limit = '{{group_name.member_installment_limit}}'
     loan = document.getElementById('loan'+'{{m.id}}').innerText;
     loan_interest = (loan / 100) * Number('{{group_name.loan_interest}}')
-    console.log(loan_interest)
     loan_interest = loan_interest * '{{n}}'
     document.getElementById('loan_interest'+'{{m.id}}').value = Math.floor(loan_interest)
         
     total_giving_amount = (Number(member_installment_limit) + Number(loan_interest))
-    final_total_giving_amount = (Number(member_installment_limit) + Number(loan_interest) + Number('{{check_member_loan}}'))
+    final_total_giving_amount = (Number(member_installment_limit) + Number(loan_interest) + Number('{{check_member_loan.amount}}'))
 
+    check_amount()
     function check_amount(){
-        amount = document.getElementById('amount').value;
+        amount = document.getElementById('loan_amount{{m.id}}').value;
         if (Number(amount) > 0){}
         if (Number(amount) < 0){
-            amount = document.getElementById('amount').value = 0;
+            amount = document.getElementById('loan_amount{{m.id}}').value = 0;
         }
-        if (Number(amount) < Number(final_total_giving_amount)){}
-        if (Number(amount) > Number(final_total_giving_amount)){
-            amount = document.getElementById('amount').value = 0;
+        if (Number(amount) > Number('{{check_member_loan.amount}}')){
+            amount = document.getElementById('loan_amount{{m.id}}').value = 0;
         }
-        amount = document.getElementById('amount').value;
-        console.log()
-        if (Number(amount) <= Number(total_giving_amount)){
-            document.getElementById('add_amount_btn').style.display = 'none'
-            document.getElementById('alert_label').style.display = 'unset'
-            document.getElementById('alert_label').innerHTML =`${total_giving_amount} या पेक्षा मोठी रक्कम भरा`
-            document.getElementById('enter_amount_label').style.display = 'none'
+        if (Number(amount) < Number('{{check_member_loan.amount}}')){
         }
-        if (Number(amount) >= Number(total_giving_amount) || Number(amount) == Number(total_giving_amount)){
-            document.getElementById('add_amount_btn').style.display = 'flex'
-            document.getElementById('alert_label').style.display = 'none'
-            document.getElementById('enter_amount_label').style.display = 'unset'
-        }
-        /////////////////////////////////////
 
-        amount -= member_installment_limit
+        total_amount = (Number(member_installment_limit) + Number(loan_interest) + Number(amount))
+        document.getElementById('amount').value = Math.floor(total_amount)
 
-        //////////////////////////////////////
-
-        amount -= loan_interest
-        
-        /////////////////////////////////////
-
-        if(amount < 0){
-            amount = 0
-        }
-        document.getElementById('loan_amount'+'{{m.id}}').value = Math.ceil(amount)
     }
 </script>

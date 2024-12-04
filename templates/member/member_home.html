@@ -78,7 +78,7 @@
 <div class="member_instalment_headline">{{member.name}} सभासद हप्ता तपशील </div>
 {% for m in member_installment %}
 <div class="div1">{{forloop.counter}}</div>
-<div class="div2">{{forloop.counter}} - {{m.date}}</div>
+<div class="div2">{{m.date}}</div>
 <div class="div3">{{m.amount}}</div>
 {% endfor %}
 <div class="div1 end1"></div>
@@ -103,7 +103,7 @@
         {% if m.loan_status == 0 %}
             <div style="color: green;">पूर्ण</div>
         {% else %}
-            <div style="color: red;">चालू</div>
+            <div style="color: red;">कर्ज बाकी {% check_member_loan m.member.id as n %}{{n.amount}}</div>
         {% endif %}
     </div>
     {% loan_installments_details m.id %}

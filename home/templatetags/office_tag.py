@@ -52,9 +52,9 @@ def check_member_loan(member_id):
         installment_amount = g['installment_amount__sum']
         if installment_amount:
             amount -= installment_amount
-        return amount
+        return {'amount':amount, 'minimum_loan_installment': member_loan.minimum_loan_installment}
     else:
-        return 0
+        return {'amount':0, 'minimum_loan_installment': 0}
     
 @register.simple_tag()
 def loan_interest_days(member_id):

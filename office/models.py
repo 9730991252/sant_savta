@@ -34,6 +34,7 @@ class Member_loan(models.Model):
     member = models.ForeignKey(Member,on_delete=models.PROTECT,null=True)
     office_employee = models.ForeignKey(Office_employee,on_delete=models.PROTECT,null=True)
     loan_amount = models.FloatField()
+    minimum_loan_installment = models.FloatField(default=0) 
     date = models.DateField(auto_now_add=True)
     added_date = models.DateTimeField(auto_now_add=True)
     loan_status = models.IntegerField(default=1)
