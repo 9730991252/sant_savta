@@ -23,7 +23,7 @@
     {% for m in members %}
     {% check_collection_status m.id as n %}
         <div {% if n == 'yes' %} style="display: none;" {% endif %} class="member_box">
-            <div class="text-center" onclick="member_details('{{m.id}}')">{{m.name}}</div>
+            <div class="text-center" onclick="member_details('{{m.id}}')">{{m.name}} <p>Mobile {{m.mobile}}</p> </div>
             <div id="members_detail{{m.id}}" class="mb-3"></div>
         </div>
     {% endfor %}
