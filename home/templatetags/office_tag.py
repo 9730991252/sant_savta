@@ -68,13 +68,14 @@ def loan_interest_days(member_id):
             day = (today_date - member_loan.date)
         if day:
             if day is 0:
-                return 1
+                return 30
             else:
-                return day.days
+                # return day.days
+                return 30
         else:
-            return 1
+            return 30
     else:
-        return 1
+        return 30
     
 @register.inclusion_tag('inclusion_tag/office/group_information.html')
 def group_information():

@@ -15,7 +15,7 @@ def member_details(request):
         }
         t = render_to_string('ajax/office/member_details.html', context)
     return JsonResponse({'t': t})
-
+ 
 def member_details_loan(request):
     if request.method == 'GET':
         m = request.session['office_mobile']
