@@ -22,7 +22,7 @@
 {% if check_member_loan.amount == 0 %}
 <div class="m-3" style="display: flex; gap: 10px;">
     <label for="">एकूण रक्कम </label>
-    <input type="number" class="form-control" value="3000" name="amount" readonly>
+    <input type="number" class="form-control" id="amount" name="amount" readonly>
 </div>
 <button type="submit" class="btn btn-primary" name="add_amount" >Add</button>
 {% else %}
