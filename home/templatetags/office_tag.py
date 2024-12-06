@@ -124,8 +124,8 @@ def member_detail(member_id):
     if member_installment_amount is None:
         member_installment_amount = 0 
         
-    l = Member_loan.objects.filter(member_id=member_id,loan_status=1).aggregate(Sum('loan_amount'))
-    loan = l['loan_amount__sum']
+    loan =  check_member_loan(member_id)
+    loan = loan['amount']
     if loan == None:
         loan_interest = 0
     else:

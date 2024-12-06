@@ -1,10 +1,10 @@
 from django.shortcuts import redirect, render
-from django.contrib import * 
+from django.contrib import *
 from office.models import *
 from datetime import date
 # Create your views here.
 def index(request):
-
+    # m.date = date(2024,11,29)
     return render(request, 'home/index.html')
 
 
