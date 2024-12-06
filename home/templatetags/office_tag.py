@@ -131,7 +131,7 @@ def member_detail(member_id):
     else:
         loan_interest = (int(loan) / 100) * group.loan_interest
         days = loan_interest_days(member_id)
-        loan_interest = math.floor( (loan_interest * days) / 365) 
+        loan_interest = math.floor( (loan_interest * days) / 360) 
     return{
         'm':Member.objects.filter(id=member_id).first(),
         'member_installment_amount':member_installment_amount,
