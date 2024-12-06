@@ -46,7 +46,7 @@
 
     member_installment_limit = '{{group_name.member_installment_limit}}'
     loan = document.getElementById('loan'+'{{m.id}}').innerText;
-    loan_interest = (loan / 100) * Number('{{group_name.loan_interest}}') / 365
+    loan_interest = (loan / 100) * Number('{{group_name.loan_interest}}') / 360
     loan_interest = loan_interest * '{{n}}'
     document.getElementById('loan_interest'+'{{m.id}}').value = Math.floor(loan_interest)
         
