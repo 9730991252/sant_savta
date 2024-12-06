@@ -21,7 +21,7 @@
   }
 </style>
 <div>welcome - {{office_empoyee.name}}</div>
-{% include 'include/office/office_menu.html' %}
+{% include 'include/group/group_menu.html' %}
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
   Add Member
 </button>
@@ -43,10 +43,10 @@
                 <div class="mb-3">
                     <lable>Address</lable>
                     <input type="text" name="address" class="form-control" required>
-                </div>
-                <div class="mb-3">
+                  </div>
+                  <div class="mb-3">
                     <lable>Mobile</lable>
-                    <input type="number" name="mobile" class="form-control" required>
+                    <input type="number"  name="mobile" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <lable>Pin</lable>
@@ -107,8 +107,9 @@
                         <input type="text" name="address" value="{{m.address}}" class="form-control" required>
                     </div>
                     <div class="mb-3">
+                      <div id="check_backend_mobile_warning{{m.mobile}}" class="alert alert-danger" style="display: none;"><b id="mobile{{m.id}}"></b> मोबाईल नंबर अगोदर वापरला आहे</div>
                         <lable>Mobile</lable>
-                        <input type="number" name="mobile" value="{{m.mobile}}" class="form-control" required>
+                        <input type="number" oninput="check_backend_mobile('{{m.id}}')" id="mobile_input{{m.id}}" name="mobile" value="{{m.mobile}}" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <lable>Pin</lable>
@@ -127,5 +128,35 @@
       </div>
       {% endfor %}
     </div>
+
+    <script>
+      function check_backend_mobile(m_id){
+        mobile = document.getElementById('mobile_input'+m_id).value;
+        console.log(mobile)
+        $.ajax({
+          url: "{% url 'check_backend_mobile' %}",
+          method: "GET",
+          data:{
+              mobile:mobile,
+              m_id:m_id
+              },
+              success: function(res){
+                console.log(res)
+                if (res.status == 1){
+                  if(res.m_id != m_id){
+                    document.getElementById('check_backend_mobile_warning'+m_id).style.display = 'flex'
+                    document.getElementById('mobile'+m_id).innerText = mobile
+                  }
+                  else{
+                    document.getElementById('check_backend_mobile_warning'+m_id).style.display = 'none'
+                  }
+                }
+                else{
+                  document.getElementById('check_backend_mobile_warning'+m_id).style.display = 'none'
+                }
+              }
+          })
+      }
+    </script>
 
 {% endblock content %}

@@ -3,6 +3,21 @@ from django.shortcuts import *
 from django.template.loader import *
 from django.db.models import Q
 from office.models import *
+
+def check_backend_mobile(request):
+    if request.method == 'GET':
+        mobile = request.GET['mobile']
+        m_id = request.GET['m_id']
+        status = 0
+        member_id = 0
+        if mobile:
+            m = Member.objects.filter(mobile=mobile).first()
+            if m:
+                member_id = m.id
+                status = 1
+            else:
+                status = 0
+    return JsonResponse({'status': status, 'm_id':member_id})
 def member_details(request):
     if request.method == 'GET':
         id = request.GET['id']
